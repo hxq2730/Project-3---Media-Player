@@ -1,0 +1,72 @@
+﻿<Window
+    x:Class="SpotifyProject.Views.Dialog.VideoViewDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyProject.Views.Dialog"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="VideoViewDialog"
+    Width="800"
+    Height="450"
+    Icon="/Resources/Icons/Spotify_icon.svg.ico"
+    Loaded="videoScreen_Loaded"
+    mc:Ignorable="d">
+    <Grid Background="Black">
+
+        <MediaElement
+            Name="mediaElement"
+            LoadedBehavior="Manual"
+            MediaEnded="MediaElement_MediaEnded"
+            MediaFailed="MediaElement_MediaFailed"
+            MediaOpened="MediaElement_MediaOpened"
+            UnloadedBehavior="Manual" />
+
+        <StackPanel
+            Margin="0,0,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Orientation="Vertical">
+            <Slider
+                Name="timelineSlider"
+                Width="600"
+                Margin="0,0,0,10"
+                ValueChanged="TimelineSlider_ValueChanged" />
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    Width="60"
+                    Margin="10"
+                    Padding="4"
+                    Click="PlayButton_Click"
+                    Content="Play" />
+                <Button
+                    Width="60"
+                    Margin="10"
+                    Padding="4"
+                    Click="PauseButton_Click"
+                    Content="Pause" />
+                <Button
+                    Width="60"
+                    Margin="10"
+                    Padding="4"
+                    Click="StopButton_Click"
+                    Content="Stop" />
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    Padding="4"
+                    Click="VolumeDownButton_Click"
+                    Content="Volume Down" />
+                <Slider
+                    Name="volumeSlider"
+                    Width="100"
+                    Margin="10,0,10,0"
+                    ValueChanged="volumeSlider_ValueChanged" />
+                <Button
+                    Padding="4"
+                    Click="VolumeUpButton_Click"
+                    Content="Volume Up" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

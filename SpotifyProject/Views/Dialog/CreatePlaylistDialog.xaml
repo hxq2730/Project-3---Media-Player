@@ -1,0 +1,98 @@
+﻿<Window
+    x:Class="SpotifyProject.Views.Dialog.CreatePlaylistDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyProject.Views.Dialog"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="New Playlist"
+    Width="450"
+    Height="300"
+    Icon="/Resources/Icons/Spotify_icon.svg.ico"
+    mc:Ignorable="d">
+
+    <Grid Background="#282828">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Margin="0,40,0,0">
+                <Image
+                    Cursor="Hand"
+                    MouseDown="imgPlaylistImage_MouseDown"
+                    x:Name="imgPlaylistImage"
+                    Width="100"
+                    Height="100"
+                    Margin="0,0,0,10"
+                    Source="/Resources/Images/unknown.jpg"
+                    Stretch="UniformToFill" />
+
+            </StackPanel>
+
+            <StackPanel
+                Grid.Column="1"
+                Margin="10"
+                Orientation="Vertical">
+                <TextBlock
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="Playlist Name:" />
+                <TextBox
+                    x:Name="txtPlaylistName"
+                    Height="40"
+                    Margin="0,5,0,10"
+                    Background="#3E3E3E"
+                    FontWeight="DemiBold"
+                    Foreground="White"
+                    Text="Unknown Playlist" />
+
+                <TextBlock
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="Description:" />
+                <TextBox
+                    x:Name="txtDescription"
+                    Height="90"
+                    Margin="0,5,0,10"
+                    Background="#3E3E3E"
+                    FontWeight="DemiBold"
+                    Foreground="White"
+                    Text="Enter every you like ...." />
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Margin="0 0 40 20" HorizontalAlignment="Right">
+            <Button
+                x:Name="SavePlaylistBtn"
+                Width="100"
+                Height="40"
+                Margin="20,0,0,0"
+                Background="White"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Click="SavePlaylistBtn_Click"
+                Cursor="Hand">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Foreground="#121212" TextAlignment="Center">
+                        Save
+                    </TextBlock>
+                </StackPanel>
+
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</Window>

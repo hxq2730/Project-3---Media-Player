@@ -1,0 +1,336 @@
+﻿<Page
+    x:Class="SpotifyProject.Views.PlaylistViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:local="clr-namespace:SpotifyProject.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="PlaylistViewPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Color x:Key="GradientStopColor1">#FF58E74A</Color>
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="{DynamicResource GradientStopColor1}" />
+                <GradientStop Offset="1" Color="#2A2A2A" />
+                <GradientStop Offset="0.258" Color="#FF4CB641" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="240" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    x:Name="BackBtn"
+                    Margin="16,0,0,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="BackBtn_Click"
+                    Cursor="Hand">
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+
+
+                        <fa:FontAwesome
+                            Padding="10"
+                            Background="Transparent"
+                            FontSize="24"
+                            Foreground="White"
+                            Icon="ArrowLeft" />
+                        <TextBlock
+                            Margin="0,0,16,0"
+                            VerticalAlignment="Center"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            TextAlignment="Center">
+                            Back
+                        </TextBlock>
+
+                    </StackPanel>
+
+
+                </Button>
+            </StackPanel>
+            <StackPanel
+                Grid.Row="1"
+                Margin="24,0,0,0"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Image
+                    x:Name="PlaylistImage"
+                    Width="160"
+                    Height="160"
+                    Source="{Binding Image}"
+                    Stretch="UniformToFill" />
+                <StackPanel Margin="16,0,0,0" VerticalAlignment="Bottom">
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Foreground="White">
+                        Playlist
+                    </TextBlock>
+                    <TextBlock
+                        x:Name="PlaylistName"
+                        FontSize="40"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="{Binding Name}" />
+                    <TextBlock
+                        x:Name="PlaylistDescription"
+                        FontSize="14"
+                        FontWeight="DemiBold"
+                        Foreground="#BFDBBC"
+                        Text="{Binding Description}" />
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <Image
+                            Width="24"
+                            Height="24"
+                            Source="/Resources/Icons/Spotify_icon.svg.ico" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            TextAlignment="Center">
+                            Spotify
+                        </TextBlock>
+
+                        <TextBlock
+                            x:Name="AmountMedia"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            FontWeight="DemiBold"
+                            Foreground="White"
+                            TextAlignment="Center">
+                            0 medias
+                        </TextBlock>
+                        <TextBlock
+                            x:Name="AmountTime"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            FontWeight="DemiBold"
+                            Foreground="#BFDBBC"
+                            TextAlignment="Center">
+                            about 3 hr 15 min
+                        </TextBlock>
+
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button
+                x:Name="PlayMusicBtn"
+                Width="120"
+                Height="40"
+                Margin="20,0,0,0"
+                Background="#1FDF64"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Click="PlayMusicBtn_Click"
+                Cursor="Hand">
+
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome
+                        FontSize="20"
+                        Foreground="White"
+                        Icon="Play" />
+                    <TextBlock
+                        Margin="16,0,0,0"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Foreground="White">
+                        Play
+                    </TextBlock>
+                </StackPanel>
+
+            </Button>
+            <StackPanel
+                Margin="32,0,0,0"
+                VerticalAlignment="Center"
+                Cursor="Hand">
+                <fa:FontAwesome
+                    FontSize="28"
+                    Foreground="#B8B8B8"
+                    Icon="HeartOutline" />
+            </StackPanel>
+
+            <StackPanel
+                x:Name="OptionBtn"
+                Margin="32,0,0,0"
+                VerticalAlignment="Center"
+                Cursor="Hand"
+                MouseDown="OptionBtn_MouseDown">
+                <fa:FontAwesome
+                    FontSize="32"
+                    Foreground="#B8B8B8"
+                    Icon="ListUl" />
+
+                <Popup
+                    x:Name="SubMenuPopup"
+                    IsOpen="False"
+                    Placement="MousePoint"
+                    StaysOpen="False">
+                    <Border
+                        Background="White"
+                        BorderBrush="#B8B8B8"
+                        BorderThickness="1">
+                        <ListView
+                            Width="150"
+                            Background="#1E1E1E"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            SelectionMode="Single">
+                            <ListView.Items>
+                                <ListViewItem
+                                    Padding="8"
+                                    Content="Add Files"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    PreviewMouseLeftButtonDown="ListViewItem_PreviewMouseLeftButtonDown" />
+                                <ListViewItem
+                                    Padding="8"
+                                    Content="Update Playlist"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    PreviewMouseLeftButtonDown="ListViewItem_PreviewMouseLeftUpdatePlaylistButtonDown" />
+                                <ListViewItem
+                                    Padding="8"
+                                    Content="Remove Playlist"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    PreviewMouseLeftButtonDown="ListViewItem_PreviewMouseRemoveLeftButtonDown" />
+                                <!--  Add more items as needed  -->
+                            </ListView.Items>
+                        </ListView>
+                    </Border>
+                </Popup>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <ListView
+            x:Name="listItemsMedia"
+            Grid.Row="2"
+            Width="Auto"
+            Background="Transparent"
+            BorderThickness="0">
+            <ListView.Resources>
+                <Style TargetType="ScrollBar">
+                    <Setter Property="Background" Value="Green" />
+                    <Setter Property="BorderBrush" Value="Blue" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="Width" Value="1" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ScrollBar">
+                                <!--  Thực hiện tùy chỉnh giao diện cho thanh scroll tại đây  -->
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        Height="36"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand"
+                        MouseDown="Grid_MouseDown">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Margin="0,0,20,0"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding Id}"
+                            TextAlignment="Center" />
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Image
+                                x:Name="imgPlaylistImage"
+                                Width="32"
+                                Height="32"
+                                Cursor="Hand"
+                                Source="/Resources/Images/unknown.jpg"
+                                Stretch="UniformToFill" />
+
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{Binding Title}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        FontSize="14"
+                                        FontWeight="DemiBold"
+                                        Foreground="#9D9F9D"
+                                        Text="{Binding Artist}" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        FontSize="14"
+                                        FontWeight="Normal"
+                                        Foreground="#9D9F9D"
+                                        Text="{Binding Length}" />
+                                </StackPanel>
+
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!--  Thêm ContextMenu  -->
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Click="DeleteMenuItem_Click" Header="Delete from playlist " />
+                                <!--  Thêm các mục menu khác nếu cần  -->
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+
+
+
+</Page>
