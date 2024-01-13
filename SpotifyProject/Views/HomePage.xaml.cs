@@ -1,7 +1,6 @@
 ﻿using SpotifyProject.Models;
 using SpotifyProject.Services;
 using SpotifyProject.ViewModels;
-using SpotifyProject.Views.Dialog;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -32,7 +31,16 @@ namespace SpotifyProject.Views
             playlistVideo.ItemsSource = homePageVM.PlaylistVideo;
         }
 
-        private void panelChoosePlaylistSong_MouseDown(object sender, MouseButtonEventArgs e)
+        private void panelChooseListSong_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Playlist? selectedPlaylist = ((FrameworkElement)sender).DataContext as Playlist;
+
+            if (selectedPlaylist != null)
+            {
+                NavigationService.Navigate(new ListMusic(selectedPlaylist, _bottomBarMusic));
+            }
+        }
+        private void panelChooselistVideo_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Playlist? selectedPlaylist = ((FrameworkElement)sender).DataContext as Playlist;
 
@@ -109,8 +117,7 @@ namespace SpotifyProject.Views
                     {
                         PlayerMedia.CurrentVideo = CurrentVideo;
                         PlayerMedia.PauseSong();
-                        var dialog = new VideoViewDialog();
-                        bool? result = dialog.ShowDialog();
+                        var dialog = new ViewVideo();
                     }
                     else
                     {

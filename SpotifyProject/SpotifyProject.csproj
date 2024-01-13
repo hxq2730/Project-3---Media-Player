@@ -8,10 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Icons\icon_music.jpg" />
-    <None Remove="Resources\Icons\Spotify_icon.svg.ico" />
-    <None Remove="Resources\Icons\Spotify_icon.svg.png" />
-    <None Remove="Resources\Images\unknown.jpg" />
+    <None Remove="Assets\avatar_default.jpg" />
+    <None Remove="Assets\delete.png" />
+    <None Remove="Assets\icon_music.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,16 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Icons\icon_music.jpg" />
-    <Resource Include="Resources\Icons\Spotify_icon.svg.ico">
+    <Resource Include="Assets\avatar_default.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Icons\Spotify_icon.svg.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\unknown.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Assets\delete.png" />
+    <Resource Include="Assets\icon_music.jpg" />
   </ItemGroup>
 
 </Project>

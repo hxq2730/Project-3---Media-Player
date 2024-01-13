@@ -6,10 +6,10 @@
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:local="clr-namespace:SpotifyProject"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Music"
+    Title="My media"
     Width="1400"
     Height="700"
-    Icon="/Resources/Icons/Spotify_icon.svg.ico"
+    Icon="/Assets/icon_music.jpg"
     Loaded="Window_Loaded"
     mc:Ignorable="d">
     <Window.Resources>
@@ -105,7 +105,7 @@
         <Grid
             x:Name="Bottom_Bar_Music"
             Height="100"
-            Background="DimGray"
+            Background="#120822"
             DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
@@ -155,17 +155,7 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <fa:FontAwesome
-                        x:Name="RandomSongBtn"
-                        Height="20"
-                        Margin="20,0,20,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        Cursor="Hand"
-                        FontSize="20"
-                        Foreground="White"
-                        Icon="Random"
-                        MouseDown="RandomSongBtn_MouseDown" />
+                   
 
                     <fa:FontAwesome
                         x:Name="PreSongBtn"
@@ -198,16 +188,7 @@
                         Icon="StepForward"
                         MouseDown="NextSongBtn_MouseDown" />
 
-                    <fa:FontAwesome
-                        x:Name="RepeatSongBtn"
-                        Grid.Column="4"
-                        Margin="20,0,20,0"
-                        HorizontalAlignment="Center"
-                        Cursor="Hand"
-                        FontSize="20"
-                        Foreground="White"
-                        Icon="RotateRight"
-                        MouseDown="RepeatSongBtn_MouseDown" />
+                 
 
                 </Grid>
 
@@ -265,38 +246,22 @@
 
 
                 <StackPanel
-                    Margin="10,0,0,0"
+                    Margin="10,20,0,0"
                     VerticalAlignment="Center"
                     Orientation="Vertical">
                     <TextBlock
+                        Width="300"
                         x:Name="nameSong"
                         FontSize="14"
                         FontWeight="DemiBold"
                         Foreground="White"
                         TextWrapping="WrapWithOverflow">
-                        Tên bài hát
+
                     </TextBlock>
-                    <TextBlock
-                        x:Name="nameArtist"
-                        Margin="0,4,0,0"
-                        FontSize="12"
-                        FontWeight="Normal"
-                        Foreground="White"
-                        TextWrapping="WrapWithOverflow">
-                        Nhạc sĩ
-                    </TextBlock>
+
                 </StackPanel>
 
-                <StackPanel
-                    Margin="30,0,0,0"
-                    VerticalAlignment="Center"
-                    Cursor="Hand">
-                    <fa:FontAwesome
-                        x:Name="favoriteIcon"
-                        FontSize="20"
-                        Foreground="White"
-                        Icon="HeartOutline" />
-                </StackPanel>
+
 
             </StackPanel>
 
@@ -307,7 +272,7 @@
         <StackPanel
             x:Name="SliderBarPanel"
             Width="320"
-            Background="Green"
+            Background="#120822"
             DockPanel.Dock="Left"
             Orientation="Vertical">
 
@@ -322,13 +287,13 @@
                 <Image x:Name="imgInfoSong"
        Width="100"
        Height="100"
-       Source="/Resources/Icons/icon_music.jpg">
+       Source="/Assets/icon_music.jpg">
                     <Image.Clip>
                         <EllipseGeometry RadiusX="50" RadiusY="50" Center="50,50"/>
                     </Image.Clip>
                 </Image>
             </StackPanel>
-            
+
             <StackPanel
                 x:Name="homePanel"
                 Margin="10,12,0,4"
@@ -343,18 +308,18 @@
                     x:Name="homeIcon"
                     Margin="10,10,10,10"
                     FontSize="20"
-                    Foreground="White"
+                    Foreground="DeepSkyBlue"
                     Icon="Home" />
                 <TextBlock
                     x:Name="homeText"
                     Margin="10,10,10,10"
                     FontSize="16"
                     FontWeight="DemiBold"
-                    Foreground="White"
+                    Foreground="DeepSkyBlue"
                     TextWrapping="WrapWithOverflow"><Run Text="Home"/></TextBlock>
             </StackPanel>
 
-          
+
 
             <StackPanel
                 x:Name="musicPanel"
@@ -365,11 +330,15 @@
                 MouseLeave="StackPanel_MouseLeave"
                 Orientation="Horizontal">
                 <fa:FontAwesome
+                                        x:Name="musicIcon"
+
                     Margin="10,10,10,10"
                     FontSize="20"
                     Foreground="White"
                     Icon="Music" />
                 <TextBlock
+                                        x:Name="musicText"
+
                     Margin="10,10,10,10"
                     FontSize="16"
                     FontWeight="Regular"
@@ -386,6 +355,8 @@
                 MouseLeave="StackPanel_MouseLeave"
                 Orientation="Horizontal">
                 <fa:FontAwesome
+                                        x:Name="videoIcon"
+
                     Margin="10,10,10,10"
                     FontSize="20"
                     Foreground="White"
@@ -393,12 +364,14 @@
                 <TextBlock
                     Margin="10,10,10,10"
                     FontSize="16"
+                                        x:Name="videoText"
+
                     FontWeight="Regular"
                     Foreground="White"
                     TextWrapping="WrapWithOverflow"><Run Text="Video"/></TextBlock>
             </StackPanel>
 
-          
+
 
             <StackPanel Margin="10,10,0,4" Orientation="Vertical" Height="306">
 
@@ -456,6 +429,7 @@
 
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock
+                                            Width="230"
                                             Margin="10,0,0,0"
                                             FontSize="14"
                                             FontWeight="Bold"
@@ -469,12 +443,7 @@
                                                 FontWeight="DemiBold"
                                                 Foreground="#9D9F9D"
                                                 Text="{Binding Type}" />
-                                            <TextBlock
-                                                Margin="10,0,0,0"
-                                                FontSize="14"
-                                                FontWeight="Normal"
-                                                Foreground="#9D9F9D"
-                                                Text="{Binding PlaylistName}" />
+
                                         </StackPanel>
 
                                     </StackPanel>

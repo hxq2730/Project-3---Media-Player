@@ -114,31 +114,16 @@
         MediaOpened="MediaElement_MediaOpened"
         UnloadedBehavior="Manual" />
         <StackPanel Grid.Row="0" VerticalAlignment="Center" Orientation="Horizontal">
-            <Button
-           x:Name="BackBtn"
-           Margin="16,0,0,0"
-           Background="Transparent"
-           BorderThickness="0"
-           Click="BackBtn_Click"
-           Cursor="Hand">
-                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+      
+                <StackPanel VerticalAlignment="Center"  Cursor="Hand"  Orientation="Horizontal" MouseDown="BackBtn_Click">
                     <fa:FontAwesome
                    Padding="10"
                    Background="Transparent"
                    FontSize="24"
                    Foreground="White"
                    Icon="ArrowLeft" />
-                    <TextBlock
-                   Margin="0,0,16,0"
-                   VerticalAlignment="Center"
-                   FontSize="20"
-                   FontWeight="Bold"
-                   Foreground="White"
-                   TextAlignment="Center">
-                   Back
-                    </TextBlock>
+              
                 </StackPanel>
-            </Button>
 
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="2">
                 <StackPanel
@@ -211,7 +196,7 @@
         <Grid
             Grid.Row="2"
             Height="90"
-            Background="DimGray"
+            Background="#120822"
             DockPanel.Dock="Bottom" Margin="0,30,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />

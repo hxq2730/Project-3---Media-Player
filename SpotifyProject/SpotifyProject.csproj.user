@@ -10,10 +10,10 @@
     <Compile Update="Views\Dialog\CreatePlaylistDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Dialog\VideoViewDialog.xaml.cs">
+    <Compile Update="Views\HomePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\HomePage.xaml.cs">
+    <Compile Update="Views\ListMusic.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MusicPage.xaml.cs">
@@ -36,10 +36,10 @@
     <Page Update="Views\Dialog\CreatePlaylistDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Dialog\VideoViewDialog.xaml">
+    <Page Update="Views\HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\HomePage.xaml">
+    <Page Update="Views\ListMusic.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MusicPage.xaml">

@@ -20,27 +20,13 @@
     <Grid Background="#121216">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="72" />
+            <RowDefinition Height="15" />
             <RowDefinition Height="64" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
-        <StackPanel
-            Grid.Row="0"
-            VerticalAlignment="Center"
-            Background="#121216"
-            Orientation="Horizontal">
-
-            <TextBlock
-                Margin="16"
-                FontSize="32"
-                FontWeight="Bold"
-                Foreground="White"
-                Text="Music"
-                TextAlignment="Center" />
-
-        </StackPanel>
+       
 
         <StackPanel
             Grid.Row="1"
@@ -112,7 +98,7 @@
             x:Name="listPlaylist"
             Grid.Row="2"
             Background="#121216"
-            BorderThickness="0">
+            BorderThickness="0" SelectionChanged="listPlaylist_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />

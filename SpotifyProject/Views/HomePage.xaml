@@ -19,30 +19,16 @@
     <ScrollViewer Background="#121216">
 
         <StackPanel Orientation="Vertical">
-            <StackPanel
-                Grid.Row="0"
-                VerticalAlignment="Center"
-                Background="#121216"
-                Orientation="Horizontal">
-
-                <TextBlock
-                    Margin="16"
-                    FontSize="32"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Text="Home"
-                    TextAlignment="Center" />
-
-            </StackPanel>
+           
 
             <StackPanel Grid.Row="1" Orientation="Vertical">
 
                 <TextBlock
-                    Margin="20"
+                    Margin="20,40,20,20"
                     FontSize="20"
                     FontWeight="DemiBold"
                     Foreground="White">
-                    Playlist Song
+                    My Song
                 </TextBlock>
 
                 <ListView
@@ -62,7 +48,7 @@
                                 Height="220"
                                 Margin="10"
                                 Cursor="Hand"
-                                MouseDown="panelChoosePlaylistSong_MouseDown"
+                                MouseDown="panelChooseListSong_MouseDown"
                                 Orientation="Vertical">
 
                                 <Image
@@ -97,7 +83,7 @@
                     FontSize="20"
                     FontWeight="DemiBold"
                     Foreground="White">
-                    Playlist Video
+                    My Video
                 </TextBlock>
 
                 <ListView

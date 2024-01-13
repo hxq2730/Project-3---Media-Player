@@ -1,17 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SpotifyProject.Views.Dialog
 {
@@ -20,7 +12,7 @@ namespace SpotifyProject.Views.Dialog
     /// </summary>
     public partial class CreatePlaylistDialog : Window
     {
-        public string PlaylistName { get; set;}
+        public string PlaylistName { get; set; }
         public string Description { get; set; }
         public string PlaylistImagePath { get; set; }
         public CreatePlaylistDialog()
@@ -33,7 +25,6 @@ namespace SpotifyProject.Views.Dialog
             if (txtPlaylistName.Text != "")
             {
                 PlaylistName = txtPlaylistName.Text;
-                Description = txtDescription.Text;
                 PlaylistImagePath = imgPlaylistImage.Source.ToString();
                 DialogResult = true;
             }
@@ -53,6 +44,11 @@ namespace SpotifyProject.Views.Dialog
                 BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
                 imgPlaylistImage.Source = bitmap;
             }
+        }
+
+        private void txtPlaylistName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

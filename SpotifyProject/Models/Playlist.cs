@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpotifyProject.Models
 {
@@ -31,6 +26,10 @@ namespace SpotifyProject.Models
         public void AddMediaItem(MediaItem mediaItem)
         {
             MediaItems.Add(mediaItem);
+        }
+        public void removeMediaItem(MediaItem mediaItem)
+        {
+            MediaItems.Remove(mediaItem);
         }
     }
     public enum PlaylistType

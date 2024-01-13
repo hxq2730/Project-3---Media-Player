@@ -61,8 +61,13 @@ namespace SpotifyProject.Views
 
             if (selectedPlaylist != null)
             {
-                NavigationService.Navigate(new PlaylistViewPage(selectedPlaylist, _bottomBarMusic));
+                NavigationService.Navigate(new ListMusic(selectedPlaylist, _bottomBarMusic));
             }
+
+        }
+
+        private void listPlaylist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
     }

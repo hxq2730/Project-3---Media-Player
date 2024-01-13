@@ -2,7 +2,6 @@
 using SpotifyProject.Services;
 using SpotifyProject.ViewModels;
 using SpotifyProject.Views;
-using SpotifyProject.Views.Dialog;
 using System;
 using System.Linq;
 using System.Windows;
@@ -68,20 +67,45 @@ namespace SpotifyProject
             if (stackPanel != null)
             {
                 var stackPanelName = stackPanel.Name;
+                SolidColorBrush activeBrush = new SolidColorBrush(Colors.DeepSkyBlue);
+                SolidColorBrush defaultBrush = new SolidColorBrush(Colors.White);
+
 
                 // Thực hiện các hành động tương ứng với sự kiện click (ví dụ: hiển thị nội dung, chuyển trang, ...)
                 switch (stackPanelName)
                 {
                     case "homePanel":
+
+                        homeText.Foreground = activeBrush;
+                        homeIcon.Foreground = activeBrush;
+                        musicText.Foreground = defaultBrush;
+                        musicIcon.Foreground = defaultBrush;
+                        videoText.Foreground = defaultBrush;
+                        videoIcon.Foreground = defaultBrush;
+
                         Bottom_Bar_Music.Visibility = Visibility.Visible;
                         mainFrame.Navigate(new HomePage(Bottom_Bar_Music));
                         break;
 
                     case "musicPanel":
+                        homeText.Foreground = defaultBrush;
+                        homeIcon.Foreground = defaultBrush;
+                        musicText.Foreground = activeBrush;
+                        musicIcon.Foreground = activeBrush;
+                        videoText.Foreground = defaultBrush;
+                        videoIcon.Foreground = defaultBrush;
+
+
                         Bottom_Bar_Music.Visibility = Visibility.Visible;
                         mainFrame.Navigate(new MusicPage(Bottom_Bar_Music));
                         break;
                     case "videoPanel":
+                        homeText.Foreground = defaultBrush;
+                        homeIcon.Foreground = defaultBrush;
+                        musicText.Foreground = defaultBrush;
+                        musicIcon.Foreground = defaultBrush;
+                        videoText.Foreground = activeBrush;
+                        videoIcon.Foreground = activeBrush;
                         Bottom_Bar_Music.Visibility = Visibility.Visible;
                         mainFrame.NavigationService.Navigate(new VideoPage(Bottom_Bar_Music));
                         break;
@@ -164,7 +188,6 @@ namespace SpotifyProject
             if (PlayerMedia.CurrentSong != null)
             {
                 nameSong.Text = PlayerMedia.CurrentSong.Title;
-                nameArtist.Text = PlayerMedia.CurrentSong.Artist;
                 EndDurationInfoSong.Text = PlayerMedia.CurrentSong.Length;
             }
 
@@ -264,34 +287,9 @@ namespace SpotifyProject
             }
         }
 
-        private void RandomSongBtn_MouseDown(object sender, MouseButtonEventArgs e)
-        {
 
-            if (PlayerMedia.ShuffleMode)
-            {
-                PlayerMedia.SetShuffleMode(false);
-                RandomSongBtn.Foreground = Brushes.White;
-            }
-            else
-            {
-                PlayerMedia.SetShuffleMode(true);
-                RandomSongBtn.Foreground = Brushes.Green;
-            }
-        }
 
-        private void RepeatSongBtn_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (PlayerMedia.RepeatMode == RepeatMode.One)
-            {
-                PlayerMedia.SetRepeatMode(RepeatMode.Off);
-                RepeatSongBtn.Foreground = Brushes.White;
-            }
-            else
-            {
-                PlayerMedia.SetRepeatMode(RepeatMode.One);
-                RepeatSongBtn.Foreground = Brushes.Green;
-            }
-        }
+
 
         private void SliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -350,10 +348,14 @@ namespace SpotifyProject
 
                     if (CurrentSong != null)
                     {
+
+
                         PlayerMedia.CurrentSong = CurrentSong;
                         PlayerMedia.CurrentSongIndex = songIndex;
                         PlayerMedia.PlaySong(CurrentSong.Path);
                         timer.Start();
+                        Bottom_Bar_Music.Visibility = Visibility.Visible;
+                        mainFrame.Navigate(new HomePage(Bottom_Bar_Music));
                     }
                     else
                     {
@@ -384,8 +386,10 @@ namespace SpotifyProject
                     {
                         PlayerMedia.CurrentVideo = CurrentVideo;
                         PlayerMedia.PauseSong();
-                        var dialog = new VideoViewDialog();
-                        bool? result = dialog.ShowDialog();
+                        mainFrame.Navigate(new ViewVideo());
+                        Bottom_Bar_Music.Visibility = Visibility.Collapsed;
+
+
                     }
                     else
                     {

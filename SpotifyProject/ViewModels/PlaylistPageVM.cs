@@ -38,6 +38,7 @@ namespace SpotifyProject.ViewModels
             Playlist = PlaylistService.GetPlaylist(Playlist.Id);
         }
 
+
         public void PlaySong(Song selectedSong)
         {
             WindowsMediaPlayer wmp = new WindowsMediaPlayer();
@@ -47,7 +48,7 @@ namespace SpotifyProject.ViewModels
             wmp.currentPlaylist.appendItem(media);
             wmp.controls.play();
         }
-        
+
 
         // Add recents
         public void AddRecentFile(int idMedia, int idPlaylist)
@@ -60,6 +61,6 @@ namespace SpotifyProject.ViewModels
         {
             PlaylistService.DeleteMediaItemFromPlaylist(idMedia, Playlist.Id);
         }
-       
+
     }
 }

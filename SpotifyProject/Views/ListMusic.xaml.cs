@@ -16,14 +16,14 @@ using WMPLib;
 namespace SpotifyProject.Views
 {
     /// <summary>
-    /// Interaction logic for PlaylistViewPage.xaml
+    /// Interaction logic for ListMusic.xaml
     /// </summary>
-    public partial class PlaylistViewPage : Page
+    public partial class ListMusic : Page
     {
         private PlaylistPageVM PlaylistPageVM { get; set; }
         private UIElement _bottomBarMusic;
 
-        public PlaylistViewPage(Playlist playlist, UIElement bottomBarMusic)
+        public ListMusic(Playlist playlist, UIElement bottomBarMusic)
         {
             InitializeComponent();
             this.PlaylistPageVM = new PlaylistPageVM(playlist);
@@ -39,36 +39,20 @@ namespace SpotifyProject.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (PlaylistPageVM.Playlist.Type == PlaylistType.Video)
+
+            List<Song> lst = MediaHelper.castMediaItemsToSongs(PlaylistPageVM.Playlist.MediaItems);
+            listItemsMedia.ItemsSource = lst;
+            if (lst.Count <= 1)
             {
-                List<Video> lst = MediaHelper.castMediaItemsToVideos(PlaylistPageVM.Playlist.MediaItems);
-                listItemsMedia.ItemsSource = lst;
-                if (lst.Count == 0)
-                {
-                    AmountMedia.Text = lst.Count.ToString() + " video";
+                AmountMedia.Text = lst.Count.ToString() + " song";
 
-                }
-                else
-                {
-                    AmountMedia.Text = lst.Count.ToString() + " videos";
-
-                }
             }
             else
             {
-                List<Song> lst = MediaHelper.castMediaItemsToSongs(PlaylistPageVM.Playlist.MediaItems);
-                listItemsMedia.ItemsSource = lst;
-                if (lst.Count == 0)
-                {
-                    AmountMedia.Text = lst.Count.ToString() + " video";
+                AmountMedia.Text = lst.Count.ToString() + " songs";
 
-                }
-                else
-                {
-                    AmountMedia.Text = lst.Count.ToString() + " videos";
-
-                }
             }
+
 
             // Đăng ký sự kiện từ MainWindow
             if (Window.GetWindow(this) is MainWindow mainWindow)
@@ -92,10 +76,9 @@ namespace SpotifyProject.Views
 
         private void PlayMusicBtn_Click(object sender, RoutedEventArgs e)
         {
-            _bottomBarMusic.Visibility = Visibility.Collapsed;
             if (PlaylistPageVM.Playlist.MediaItems.Count == 0)
             {
-                MessageBox.Show("There isn't any videos in playlist!");
+                MessageBox.Show("There isn't any song in playlist");
                 return;
             }
 
@@ -131,7 +114,7 @@ namespace SpotifyProject.Views
 
             // Thiết lập các thuộc tính cho OpenFileDialog
             openFileDialog.Filter = "Music files (*.mp3)|*.mp3|All files (*.*)|*.*";
-            openFileDialog.Title = "Select Music Files";
+            openFileDialog.Title = "Select your song";
             openFileDialog.Multiselect = true; // Cho phép người dùng chọn nhiều file
 
             // Mở hộp thoại chọn file
@@ -154,6 +137,7 @@ namespace SpotifyProject.Views
 
                         if (tag != null)
                         {
+                            Console.WriteLine(tag);
                             // Lấy thông tin từ các khung ID3
                             string title = tag.Title;
                             string artist = tag.Artists;
@@ -162,13 +146,13 @@ namespace SpotifyProject.Views
                             string genre = tag.Genre;
                             string length = $"{duration.Minutes}:{duration.Seconds}";
 
-                            Song song = new Song(title ?? "Unknown", (artist == "" ? "Unknown" : artist), album ?? "Unknown", year ?? "Unknown", genre ?? "Unknown", length ?? "Unknown", filePath);
+                            Song song = new Song(title ?? "Unknown", (artist == "" ? "" : artist), album ?? "Unknown", year ?? "Unknown", genre ?? "Unknown", length ?? "Unknown", filePath);
                             PlaylistPageVM.AddSongToPlaylist(song);
                         }
                         else
                         {
                             // Create Object Song
-                            Song song = new Song(filePath.Substring(0, filePath.IndexOf('.')), "Unknown", "Unknown", "Unknown", "Unknown", $"{duration.Minutes}:{duration.Seconds}", filePath);
+                            Song song = new Song(Path.GetFileNameWithoutExtension(filePath), "Unknown", "Unknown", "Unknown", "Unknown", $"{duration.Minutes}:{duration.Seconds}", filePath);
                             PlaylistPageVM.AddSongToPlaylist(song);
                         }
                     }
@@ -192,7 +176,7 @@ namespace SpotifyProject.Views
 
             // Thiết lập các thuộc tính cho OpenFileDialog
             openFileDialog.Filter = "Video files (*.mp4)|*.mp4|All files (*.*)|*.*";
-            openFileDialog.Title = "Select your video";
+            openFileDialog.Title = "Select Video Files";
             openFileDialog.Multiselect = true; // Cho phép người dùng chọn nhiều file
 
             // Mở hộp thoại chọn file
@@ -210,7 +194,7 @@ namespace SpotifyProject.Views
 
                     var info = new FileInfo(filePath);
                     string title = info.Name.Substring(0, info.Name.IndexOf('.'));
-                    string artist = "";
+                    string artist = "Unknown";
 
                     DateTime dateCreated = info.CreationTime;
 
@@ -239,7 +223,20 @@ namespace SpotifyProject.Views
 
             // Đóng Popup sau khi xử lý
         }
-
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListViewItem listViewItem)
+            {
+                if (PlaylistPageVM.Playlist.Type == PlaylistType.Song)
+                {
+                    OpenDiaLogSong();
+                }
+                else
+                {
+                    OpenDialogVideo();
+                }
+            }
+        }
 
         private void ListViewItem_PreviewMouseLeftUpdatePlaylistButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -258,7 +255,6 @@ namespace SpotifyProject.Views
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _bottomBarMusic.Visibility = Visibility.Collapsed;
             if (e.ChangedButton == MouseButton.Right)
             {
                 // Hiển thị ContextMenu
@@ -349,16 +345,60 @@ namespace SpotifyProject.Views
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
 
-
-
-            OpenDialogVideo();
+            OpenDiaLogSong();
 
 
         }
 
-        private void deleteMenuItem_Click(object sender, RoutedEventArgs e)
+        private static void Shuffle(List<Song> list)
         {
+            Random rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                Song value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
+        private void RandomSongBtn_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            List<Song> lst = MediaHelper.castMediaItemsToSongs(PlaylistPageVM.Playlist.MediaItems);
+            Shuffle(lst);
+
+            foreach (var song in lst)
+            {
+                MediaItem item = song as MediaItem;
+                PlaylistPageVM.Playlist.removeMediaItem(item);
+            }
+
+            foreach (var song in lst)
+            {
+                MediaItem item = song as MediaItem;
+                PlaylistPageVM.Playlist.AddMediaItem(item);
+            }
+
+            PlayerMedia.CurrentPlaylist = PlaylistPageVM.Playlist;
+            PlayerMedia.CurrentSong = (Song)PlaylistPageVM.Playlist.MediaItems[0];
+            PlayerMedia.CurrentSongIndex = 0;
+            if (PlayerMedia.IsPlaying)
+            {
+                PlayerMedia.PlaySong(PlaylistPageVM.Playlist.MediaItems[0].Path);
+
+                OnPlayPauseStateChanged(PlayerMedia.IsPlaying);
+
+            }
+
+
+
+
+            listItemsMedia.ItemsSource = lst;
 
         }
     }
 }
+
+

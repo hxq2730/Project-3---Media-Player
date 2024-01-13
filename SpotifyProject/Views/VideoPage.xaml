@@ -21,27 +21,13 @@
     <Grid Background="#121216">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="72" />
+            <RowDefinition Height="15" />
             <RowDefinition Height="64" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
-        <StackPanel
-            Grid.Row="0"
-            VerticalAlignment="Center"
-            Background="#121216"
-            Orientation="Horizontal">
-
-            <TextBlock
-                Margin="16"
-                FontSize="32"
-                FontWeight="Bold"
-                Foreground="White"
-                Text="Video"
-                TextAlignment="Center" />
-
-        </StackPanel>
+       
 
         <StackPanel
             Grid.Row="1"
