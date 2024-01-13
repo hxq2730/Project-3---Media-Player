@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Icons\icon_music.jpg" />
     <None Remove="Resources\Icons\Spotify_icon.svg.ico" />
     <None Remove="Resources\Icons\Spotify_icon.svg.png" />
     <None Remove="Resources\Images\unknown.jpg" />
@@ -33,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Icons\icon_music.jpg" />
     <Resource Include="Resources\Icons\Spotify_icon.svg.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

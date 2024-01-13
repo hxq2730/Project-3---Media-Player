@@ -45,8 +45,6 @@
                     Click="BackBtn_Click"
                     Cursor="Hand">
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-
-
                         <fa:FontAwesome
                             Padding="10"
                             Background="Transparent"

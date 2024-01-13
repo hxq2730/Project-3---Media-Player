@@ -13,6 +13,7 @@
     mc:Ignorable="d">
     <Grid Background="Black">
 
+        
         <MediaElement
             Name="mediaElement"
             LoadedBehavior="Manual"
@@ -20,8 +21,8 @@
             MediaFailed="MediaElement_MediaFailed"
             MediaOpened="MediaElement_MediaOpened"
             UnloadedBehavior="Manual" />
-
-        <StackPanel
+         
+        <StackPanel 
             Margin="0,0,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"

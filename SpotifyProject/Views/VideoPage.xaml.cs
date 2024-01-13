@@ -1,20 +1,10 @@
 ﻿using SpotifyProject.Models;
 using SpotifyProject.ViewModels;
 using SpotifyProject.Views.Dialog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SpotifyProject.Views
 {
@@ -25,10 +15,14 @@ namespace SpotifyProject.Views
     {
 
         private VideoPageVM videoPageVM;
-        public VideoPage()
+        private UIElement _bottomBarMusic;
+
+        public VideoPage(UIElement bottomBarMusic)
         {
             InitializeComponent();
             videoPageVM = new VideoPageVM();
+            _bottomBarMusic = bottomBarMusic;
+
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -66,9 +60,10 @@ namespace SpotifyProject.Views
         {
             Playlist? selectedPlaylist = ((FrameworkElement)sender).DataContext as Playlist;
 
+
             if (selectedPlaylist != null)
             {
-                NavigationService.Navigate(new PlaylistViewPage(selectedPlaylist));
+                NavigationService.Navigate(new PlaylistViewPage(selectedPlaylist, _bottomBarMusic));
             }
         }
     }

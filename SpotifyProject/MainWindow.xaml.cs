@@ -1,22 +1,14 @@
 ﻿using SpotifyProject.Models;
 using SpotifyProject.Services;
 using SpotifyProject.ViewModels;
+using SpotifyProject.Views;
 using SpotifyProject.Views.Dialog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace SpotifyProject
@@ -39,7 +31,7 @@ namespace SpotifyProject
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            mainFrame.Navigate(new Uri("Views/HomePage.xaml", UriKind.Relative));
+            mainFrame.Navigate(new HomePage(Bottom_Bar_Music));
 
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 1, 0);
@@ -52,7 +44,7 @@ namespace SpotifyProject
 
         private void StackPanel_MouseEnter(object sender, MouseEventArgs e)
         {
-            
+
             var stackPanel = sender as StackPanel;
             if (stackPanel != null)
             {
@@ -81,21 +73,20 @@ namespace SpotifyProject
                 switch (stackPanelName)
                 {
                     case "homePanel":
-                        mainFrame.Navigate(new Uri("Views/HomePage.xaml", UriKind.Relative));
+                        Bottom_Bar_Music.Visibility = Visibility.Visible;
+                        mainFrame.Navigate(new HomePage(Bottom_Bar_Music));
                         break;
-                    case "searchPanel":
-                        MessageBox.Show("Search clicked!");
-                        break;
+
                     case "musicPanel":
-                        mainFrame.Navigate(new Uri("Views/MusicPage.xaml", UriKind.Relative));
+                        Bottom_Bar_Music.Visibility = Visibility.Visible;
+                        mainFrame.Navigate(new MusicPage(Bottom_Bar_Music));
                         break;
                     case "videoPanel":
-                        mainFrame.Navigate(new Uri("Views/VideoPage.xaml", UriKind.Relative));
+                        Bottom_Bar_Music.Visibility = Visibility.Visible;
+                        mainFrame.NavigationService.Navigate(new VideoPage(Bottom_Bar_Music));
                         break;
-                    case "settingPanel":
-                        MessageBox.Show("Setting clicked!");
-                        break;
-        
+
+
                 }
             }
         }
@@ -114,18 +105,19 @@ namespace SpotifyProject
 
         private void PlayIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(PlayerMedia.IsPlaying)
+            if (PlayerMedia.IsPlaying)
             {
                 PlayerMedia.PauseSong();
                 ChangeStateIcon();
                 timer.Stop();
-            } else if(PlayerMedia.IsPaused)
+            }
+            else if (PlayerMedia.IsPaused)
             {
                 PlayerMedia.ContinueSong();
                 ChangeStateIcon();
                 timer.Start();
             }
-            else if(PlayerMedia.IsStopped)
+            else if (PlayerMedia.IsStopped)
             {
                 PlayerMedia.PlaySong(PlayerMedia.player.URL);
                 ChangeStateIcon();
@@ -169,25 +161,25 @@ namespace SpotifyProject
 
         public void SetCurrentSongInfo()
         {
-            if(PlayerMedia.CurrentSong != null)
+            if (PlayerMedia.CurrentSong != null)
             {
                 nameSong.Text = PlayerMedia.CurrentSong.Title;
                 nameArtist.Text = PlayerMedia.CurrentSong.Artist;
                 EndDurationInfoSong.Text = PlayerMedia.CurrentSong.Length;
             }
-          
+
         }
 
         public void UpdateProcessingInfo()
         {
-            if (PlayerMedia.CurrentSong != null && PlayerMedia.player != null )
+            if (PlayerMedia.CurrentSong != null && PlayerMedia.player != null)
             {
 
                 int currentPosition = PlayerMedia.GetCurrentSongPosition();
-               
-                if(PlayerMedia.player.playState == WMPLib.WMPPlayState.wmppsStopped)
+
+                if (PlayerMedia.player.playState == WMPLib.WMPPlayState.wmppsStopped)
                 {
-                    if(PlayerMedia.ShuffleMode)
+                    if (PlayerMedia.ShuffleMode)
                     {
                         PlayerMedia.RandomSong();
                     }
@@ -221,8 +213,8 @@ namespace SpotifyProject
             {
                 // Cập nhật thời gian liên tục
                 UpdateProcessingInfo();
-            } 
-            
+            }
+
         }
 
         private bool seeking = false;
@@ -238,13 +230,13 @@ namespace SpotifyProject
                     lastPos = value;
                 }
             }
-         
+
         }
 
         private void SliderBarProcessing_GotMouseCapture(object sender, MouseEventArgs e)
         {
             seeking = true;
-           
+
         }
 
         private void SliderBarProcessing_LostMouseCapture(object sender, MouseEventArgs e)
@@ -254,7 +246,8 @@ namespace SpotifyProject
 
         private void NextSongBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(PlayerMedia.CurrentSong != null) { 
+            if (PlayerMedia.CurrentSong != null)
+            {
                 PlayerMedia.NextSong();
                 timer.Start();
 
@@ -288,7 +281,7 @@ namespace SpotifyProject
 
         private void RepeatSongBtn_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(PlayerMedia.RepeatMode == RepeatMode.One)
+            if (PlayerMedia.RepeatMode == RepeatMode.One)
             {
                 PlayerMedia.SetRepeatMode(RepeatMode.Off);
                 RepeatSongBtn.Foreground = Brushes.White;
@@ -324,24 +317,24 @@ namespace SpotifyProject
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if(e.Key == Key.Space)
+            if (e.Key == Key.Space)
             {
-               
 
-            }   
-            
+
+            }
+
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-  
+
             // select song and play
             RecentView? selected = ((FrameworkElement)sender).DataContext as RecentView;
 
             if (selected != null)
             {
                 PlayerMedia.CurrentPlaylist = mainWindowVM.PlaylistService.GetPlaylist(selected.PlaylistId);
-                if(PlayerMedia.CurrentPlaylist.Type == PlaylistType.Song)
+                if (PlayerMedia.CurrentPlaylist.Type == PlaylistType.Song)
                 {
                     var songIndex = 0;
                     Song CurrentSong = null;
@@ -355,13 +348,14 @@ namespace SpotifyProject
                         songIndex++;
                     }
 
-                    if(CurrentSong != null)
+                    if (CurrentSong != null)
                     {
                         PlayerMedia.CurrentSong = CurrentSong;
                         PlayerMedia.CurrentSongIndex = songIndex;
                         PlayerMedia.PlaySong(CurrentSong.Path);
                         timer.Start();
-                    } else
+                    }
+                    else
                     {
                         // reload recents
                         mainWindowVM.LoadRecents();
@@ -371,7 +365,8 @@ namespace SpotifyProject
                     }
 
 
-                } else if(PlayerMedia.CurrentPlaylist.Type == PlaylistType.Video)
+                }
+                else if (PlayerMedia.CurrentPlaylist.Type == PlaylistType.Video)
                 {
                     var videoIndex = 0;
                     Video CurrentVideo = null;
@@ -385,13 +380,14 @@ namespace SpotifyProject
                         videoIndex++;
                     }
 
-                    if(CurrentVideo != null)
+                    if (CurrentVideo != null)
                     {
                         PlayerMedia.CurrentVideo = CurrentVideo;
                         PlayerMedia.PauseSong();
                         var dialog = new VideoViewDialog();
                         bool? result = dialog.ShowDialog();
-                    } else
+                    }
+                    else
                     {
                         // reload recents
                         mainWindowVM.LoadRecents();
@@ -400,9 +396,9 @@ namespace SpotifyProject
 
                     }
                 }
-               
+
             }
-            
+
         }
     }
 }

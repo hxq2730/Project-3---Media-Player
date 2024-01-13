@@ -4,23 +4,13 @@ using SpotifyProject.Helper;
 using SpotifyProject.Models;
 using SpotifyProject.Services;
 using SpotifyProject.ViewModels;
-using SpotifyProject.Views.Dialog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WMPLib;
 
 namespace SpotifyProject.Views
@@ -31,11 +21,14 @@ namespace SpotifyProject.Views
     public partial class PlaylistViewPage : Page
     {
         private PlaylistPageVM PlaylistPageVM { get; set; }
-        public PlaylistViewPage(Playlist playlist)
+        private UIElement _bottomBarMusic;
+
+        public PlaylistViewPage(Playlist playlist, UIElement bottomBarMusic)
         {
             InitializeComponent();
             this.PlaylistPageVM = new PlaylistPageVM(playlist);
             this.DataContext = playlist;
+            _bottomBarMusic = bottomBarMusic;
         }
         public event EventHandler<bool> PlayPauseStateChanged;
 
@@ -81,7 +74,7 @@ namespace SpotifyProject.Views
 
         private void PlayMusicBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            _bottomBarMusic.Visibility = Visibility.Collapsed;
             if (PlaylistPageVM.Playlist.MediaItems.Count == 0)
             {
                 MessageBox.Show("Playlist is empty!");
@@ -94,7 +87,16 @@ namespace SpotifyProject.Views
                 PlayerMedia.CurrentSong = (Song)PlaylistPageVM.Playlist.MediaItems[0];
                 PlayerMedia.CurrentSongIndex = 0;
                 PlayerMedia.PlaySong(PlaylistPageVM.Playlist.MediaItems[0].Path);
-
+                OnPlayPauseStateChanged(PlayerMedia.IsPlaying);
+            }
+            else if (PlaylistPageVM.Playlist.Type == PlaylistType.Video)
+            {
+                PlayerMedia.CurrentPlaylist = PlaylistPageVM.Playlist;
+                PlayerMedia.CurrentVideo = (Video)PlaylistPageVM.Playlist.MediaItems[0];
+                PlayerMedia.CurrentSongIndex = 0;
+                //PlayerMedia.PlaySong(PlaylistPageVM.Playlist.MediaItems[0].Path);
+                var page = new ViewVideo();
+                NavigationService.Navigate(page);
                 OnPlayPauseStateChanged(PlayerMedia.IsPlaying);
             }
 
@@ -256,7 +258,7 @@ namespace SpotifyProject.Views
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            _bottomBarMusic.Visibility = Visibility.Collapsed;
             if (e.ChangedButton == MouseButton.Right)
             {
                 // Hiển thị ContextMenu
@@ -293,9 +295,12 @@ namespace SpotifyProject.Views
                         PlayerMedia.CurrentVideo = selectedVideo;
                         PlaylistPageVM.AddRecentFile(selectedVideo.Id, PlaylistPageVM.Playlist.Id);
 
-                        var dialog = new VideoViewDialog();
+
+                        //var dialog = new VideoViewDialog();
+                        var page = new ViewVideo();
+                        NavigationService.Navigate(page);
                         PlayerMedia.PauseSong();
-                        bool? result = dialog.ShowDialog();
+                        //bool? result = dialog.ShowDialog();
 
                     }
                 }

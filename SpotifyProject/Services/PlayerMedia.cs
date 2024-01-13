@@ -32,6 +32,7 @@ namespace SpotifyProject.Services
         public static bool IsMuted { get; set; } = false;
         public static int Volume { get; set; } = 50;
         public static int CurrentSongIndex { get; set; } = 0;
+        public static int CurrentVideoIndex { get; set; } = 0;
         public static Playlist CurrentPlaylist { get; set; }
         public static Song CurrentSong { get; set; }
         public static Video CurrentVideo { get; set; }
@@ -46,8 +47,18 @@ namespace SpotifyProject.Services
             player.controls.play();
             IsPlaying = true;
             IsPaused = false;
-            IsStopped = false;            
+            IsStopped = false;
         }
+
+        public static void PlayVideo(string path)
+        {
+            player.URL = path;
+            player.controls.play();
+            IsPlaying = true;
+            IsPaused = false;
+            IsStopped = false;
+        }
+
         public static void PauseSong()
         {
             player.controls.pause();
@@ -163,8 +174,7 @@ namespace SpotifyProject.Services
                 }
             }
         }
-      
-        // previous song
+
         public static void PreviousSong()
         {
             if (CurrentPlaylist != null)
@@ -180,6 +190,44 @@ namespace SpotifyProject.Services
                     CurrentSongIndex = CurrentPlaylist.MediaItems.Count - 1;
                     CurrentSong = CurrentPlaylist.MediaItems[CurrentSongIndex] as Song;
                     PlaySong(CurrentSong.Path);
+                }
+            }
+        }
+
+        public static void NextVideo()
+        {
+            if (CurrentPlaylist != null)
+            {
+                if (CurrentVideoIndex < CurrentPlaylist.MediaItems.Count - 1)
+                {
+                    CurrentVideoIndex++;
+                    CurrentVideo = CurrentPlaylist.MediaItems[CurrentVideoIndex] as Video;
+                    //PlaySong(CurrentVideo.Path);
+                }
+                else
+                {
+                    CurrentVideoIndex = 0;
+                    CurrentVideo = CurrentPlaylist.MediaItems[CurrentVideoIndex] as Video;
+                    //PlaySong(CurrentVideo.Path);
+                }
+            }
+        }
+
+        public static void PreviousVideo()
+        {
+            if (CurrentPlaylist != null)
+            {
+                if (CurrentVideoIndex > 0)
+                {
+                    CurrentVideoIndex--;
+                    CurrentVideo = CurrentPlaylist.MediaItems[CurrentVideoIndex] as Video;
+                    //PlaySong(CurrentSong.Path);
+                }
+                else
+                {
+                    CurrentVideoIndex = CurrentPlaylist.MediaItems.Count - 1;
+                    CurrentVideo = CurrentPlaylist.MediaItems[CurrentVideoIndex] as Video;
+                    //PlaySong(CurrentVideo.Path);
                 }
             }
         }

@@ -15,10 +15,13 @@ namespace SpotifyProject.Views
     public partial class HomePage : Page
     {
         private HomePageVM homePageVM;
-        public HomePage()
+        private UIElement _bottomBarMusic;
+
+        public HomePage(UIElement bottomBarMusic)
         {
             InitializeComponent();
             homePageVM = new HomePageVM();
+            _bottomBarMusic = bottomBarMusic;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -35,7 +38,7 @@ namespace SpotifyProject.Views
 
             if (selectedPlaylist != null)
             {
-                NavigationService.Navigate(new PlaylistViewPage(selectedPlaylist));
+                NavigationService.Navigate(new PlaylistViewPage(selectedPlaylist, _bottomBarMusic));
             }
         }
 
@@ -45,7 +48,7 @@ namespace SpotifyProject.Views
 
             if (selectedPlaylist != null)
             {
-                NavigationService.Navigate(new PlaylistViewPage(selectedPlaylist));
+                NavigationService.Navigate(new PlaylistViewPage(selectedPlaylist, _bottomBarMusic));
             }
         }
 
